@@ -11,12 +11,14 @@ renamed as (
     select
         orders_id,
         shipping_fee,
-        shipping_fee_1,
         logcost,
-        ship_cost
+        cast (ship_cost as FLOAT64) AS ship_cost
 
     from source
 
 )
 
-select * from renamed
+select * 
+
+ from renamed
+ 
