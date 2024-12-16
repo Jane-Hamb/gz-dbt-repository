@@ -3,7 +3,7 @@ WITH sales_data AS (
         s.orders_id,
         s.products_id,
         s.date_date,
-        s.revenue AS turnover,
+        s.revenue AS revenue,
         s.quantity AS qty,
         p.purchase_price,
         (s.quantity * p.purchase_price) AS purchase_costs,
