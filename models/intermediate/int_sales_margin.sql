@@ -1,4 +1,3 @@
-
 WITH sales_data AS (
     SELECT
         s.orders_id,
@@ -17,4 +16,5 @@ WITH sales_data AS (
         s.products_id = p.products_id
 )
 
-SELECT * FROM sales_data;
+SELECT * FROM sales_data
+
