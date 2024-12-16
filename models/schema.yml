@@ -1,0 +1,56 @@
+sources:
+
+  - name: gz_raw_data
+    tables:
+      - name: sales
+        identifier: aw_gz_sales
+        description: |
+          Sales data for Greenweez, with one row per product sold in each order.
+        columns:
+          - name:  date_date  
+            description: |
+             The date when the purchase was made. The format is YYYY-MM-DD.
+          - name: orders_id
+            description: |
+             Unique identifier for each order. 
+          - name: products_id
+            description: Unique identifier for each product in the inventory. 
+          - name: revenue
+            description: Total sale amount for the given product (price_per_unit * quantity_sold).
+          - name: quantity
+            description: The number of units of the product sold in the specific transaction.
+       # tests:
+       #   - unique:
+       #       column_name: "(orders_id , products_id)"
+              
+              
+      - name: product
+        identifier: raw_gz_product
+        description: 
+          This table contains information about products, including unique product codes and their corresponding prices.
+        columns:
+          - name: products_id
+            description: A unique identifier for each product in the system. This code is used to track and manage inventory.
+            tests:
+              - unique  
+              - not_null  
+          - name: purchase_price
+            description: The price of the product.
+      - name: ship
+        identifier: raw_gz_ship
+        description: |
+          This table contains information related to shipping details for customer orders, including shipping costs and related fees.
+        columns:
+          - name: orders_id
+            description: A unique identifier for each order.
+            tests:
+              - unique  
+              - not_null  
+          - name: shipping_fee
+            description: The fee charged for shipping the order. 
+            tests:
+              - not_null
+          - name: logcost
+            description: Logistical cost associated with the shipping process.
+          - name: ship_cost
+            description: The shipping cost.
