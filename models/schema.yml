@@ -219,5 +219,72 @@ models:
         description: agregated number of clicks per day
         tests:
           - not_null
-          
+  - name: finance_campaigns_day
+    description: "This model aggregates financial and campaign data by date, including revenue, purchases, ads cost, and campaign performance metrics."
+    columns:
+      - name: date_date
+        description: "The date for the aggregated data."
+        tests:
+          - not_null
+          - unique
+
+      - name: total_revenue
+        description: "The total revenue generated."
+        tests:
+          - not_null
+
+      - name: total_qty
+        description: "The total quantity of items sold."
+        tests:
+          - not_null
+
+      - name: nb_transaction
+        description: "The number of unique transactions."
+        tests:
+          - not_null
+
+      - name: total_margin
+        description: "The total profit margin from sales."
+        tests:
+          - not_null
+
+      - name: operational_margin
+        description: "The operational profit margin, calculated by adding margin, shipping fee, and other operational costs."
+        tests:
+          - not_null
+
+      - name: total_purchase_costs
+        description: "The total costs associated with the purchase of items."
+        tests:
+          - not_null
+
+      - name: total_shipping_fees
+        description: "The total cost of shipping."
+        tests:
+          - not_null
+
+      - name: total_logcosts
+        description: "The total logistics costs."
+        tests:
+          - not_null
+
+      - name: avg_basket
+        description: "The average basket size, calculated as total revenue divided by the number of transactions."
+        tests:
+          - not_null
+
+      - name: ads_cost
+        description: "The total advertising cost for the campaigns."
+        tests:
+          - not_null
+
+      - name: ads_impressions
+        description: "The total number of impressions from the campaigns."
+        tests:
+          - not_null
+
+      - name: ads_clicks
+        description: "The total number of clicks from the campaigns."
+        tests:
+          - not_null          
               
