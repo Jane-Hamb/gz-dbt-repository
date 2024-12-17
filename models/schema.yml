@@ -54,6 +54,14 @@ sources:
             description: Logistical cost associated with the shipping process.
           - name: ship_cost
             description: The shipping cost.
+      - name: adwords
+        identifier: raw_gz_adwords
+      - name: bing
+        identifier: raw_gz_bing
+      - name: criteo
+        identifier: raw_gz_criteo
+      - name: facebook
+        identifier: raw_gz_facebook
 models:
   - name: int_orders_margin
     description: This model aggregates order data by `orders_id`, calculating the total revenue, total quantity, total purchase costs, and margin for each order.
