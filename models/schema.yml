@@ -54,6 +54,14 @@ sources:
             description: Logistical cost associated with the shipping process.
           - name: ship_cost
             description: The shipping cost.
+      - name: adwords
+        identifier: raw_gz_adwords
+      - name: bing
+        identifier: raw_gz_bing
+      - name: criteo
+        identifier: raw_gz_criteo
+      - name: facebook
+        identifier: raw_gz_facebook
 models:
   - name: int_orders_margin
     description: This model aggregates order data by `orders_id`, calculating the total revenue, total quantity, total purchase costs, and margin for each order.
@@ -150,5 +158,122 @@ models:
         description: The total logistics costs for the day, calculated as the sum of logistics costs for all orders.
       - name: avg_basket
         description: The average basket size (total revenue divided by the number of distinct orders) for the day.
+  - name: int_campaigns
+    description: "This model aggregates campaign data from multiple staging tables into a single intermediate model, including campaign performance metrics like cost, impressions, and clicks."
+    columns:
+      - name: date_date
+        description: "Date of the campaign data."
+        tests:
+          - not_null
 
+      - name: paid_source
+        description: "Source from which the paid campaign originated (e.g., Google, Facebook, etc.)."
+        tests:
+          - not_null
+
+      - name: campaign_key
+        description: "Unique key that identifies the campaign."
+        tests:
+          - not_null
+
+      - name: campaign_name
+        description: "Name of the campaign (renamed from 'campgn_name' for consistency)."
+        tests:
+          - not_null
+
+      - name: ads_cost
+        description: "Cost of the campaign's ads (cast to float64)."
+        tests:
+          - not_null
+
+      - name: impression
+        description: "Number of impressions for the campaign."
+        tests:
+          - not_null
+
+      - name: click
+        description: "Number of clicks generated from the campaign."
+        tests:
+          - not_null
+
+    # Primary key defined as a combination of `date_date` and `campaign_key`
+    #tests:
+    #  - unique:
+    #      columns: ['date_date', 'campaign_key']
+  - name: int_campaigns_day
+    description: aggregated version of int_campaigns model for each day
+    columns:
+      - name: date_date
+        description: date, primary key
+        tests:
+          - unique
+      - name: ads_cost
+        description: agregated ads_costs
+        tests:
+          - not_null
+      - name: ads_impressions
+        description: agregated impressions per day
+        tests:
+          - not_null              
+      - name: ads_clicks
+        description: agregated number of clicks per day
+        tests:
+          - not_null
+  - name: finance_campaigns_day
+    description: "This model aggregates financial and campaign data by date, including revenue, purchases, ads cost, and campaign performance metrics."
+    columns:
+      - name: date_date
+        description: "The date for the aggregated data."
+        tests:
+          - not_null
+          - unique
+
+      - name: total_revenue
+        description: "The total revenue generated."
+        tests:
+          - not_null
+
+      - name: total_qty
+        description: "The total quantity of items sold."
+        tests:
+          - not_null
+
+      - name: nb_transaction
+        description: "The number of unique transactions."
+        tests:
+          - not_null
+
+      - name: total_margin
+        description: "The total profit margin from sales."
+        tests:
+          - not_null
+
+      - name: operational_margin
+        description: "The operational profit margin, calculated by adding margin, shipping fee, and other operational costs."
+        tests:
+          - not_null
+
+      - name: total_purchase_costs
+        description: "The total costs associated with the purchase of items."
+      
+      - name: total_shipping_fees
+        description: "The total cost of shipping."
         
+      - name: total_logcosts
+        description: "The total logistics costs."
+       
+      - name: avg_basket
+        description: "The average basket size, calculated as total revenue divided by the number of transactions."
+        tests:
+          - not_null
+
+      - name: ads_cost
+        description: "The total advertising cost for the campaigns."
+     
+      - name: ads_impressions
+        description: "The total number of impressions from the campaigns."
+        
+      - name: ads_clicks
+        description: "The total number of clicks from the campaigns."
+                  
+              

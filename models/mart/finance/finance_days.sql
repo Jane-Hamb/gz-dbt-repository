@@ -11,6 +11,7 @@ WITH finance_day AS (
         SUM(total_purchase_costs) AS total_purchase_costs,
         SUM(shipping_fee) AS total_shipping_fees,
         SUM(logcost) AS total_logcosts,
+        SUM(ship_cost) AS total_ship_costs,
         SUM(total_revenue) / count(DISTINCT orders_id) AS avg_basket
 
     FROM
