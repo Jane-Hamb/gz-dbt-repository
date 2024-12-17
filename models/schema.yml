@@ -200,3 +200,24 @@ models:
     #tests:
     #  - unique:
     #      columns: ['date_date', 'campaign_key']
+  - name: int_campaigns_day
+    description: aggregated version of int_campaigns model for each day
+    columns:
+      - name: date_date
+        description: date, primary key
+        tests:
+          - unique
+      - name: ads_cost
+        description: agregated ads_costs
+        tests:
+          - not_null
+      - name: ads_impressions
+        description: agregated impressions per day
+        tests:
+          - not_null              
+      - name: ads_clicks
+        description: agregated number of clicks per day
+        tests:
+          - not_null
+          
+              
