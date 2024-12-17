@@ -158,5 +158,45 @@ models:
         description: The total logistics costs for the day, calculated as the sum of logistics costs for all orders.
       - name: avg_basket
         description: The average basket size (total revenue divided by the number of distinct orders) for the day.
+  - name: int_campaigns
+    description: "This model aggregates campaign data from multiple staging tables into a single intermediate model, including campaign performance metrics like cost, impressions, and clicks."
+    columns:
+      - name: date_date
+        description: "Date of the campaign data."
+        tests:
+          - not_null
 
-        
+      - name: paid_source
+        description: "Source from which the paid campaign originated (e.g., Google, Facebook, etc.)."
+        tests:
+          - not_null
+
+      - name: campaign_key
+        description: "Unique key that identifies the campaign."
+        tests:
+          - not_null
+
+      - name: campaign_name
+        description: "Name of the campaign (renamed from 'campgn_name' for consistency)."
+        tests:
+          - not_null
+
+      - name: ads_cost
+        description: "Cost of the campaign's ads (cast to float64)."
+        tests:
+          - not_null
+
+      - name: impression
+        description: "Number of impressions for the campaign."
+        tests:
+          - not_null
+
+      - name: click
+        description: "Number of clicks generated from the campaign."
+        tests:
+          - not_null
+
+    # Primary key defined as a combination of `date_date` and `campaign_key`
+    #tests:
+    #  - unique:
+    #      columns: ['date_date', 'campaign_key']
