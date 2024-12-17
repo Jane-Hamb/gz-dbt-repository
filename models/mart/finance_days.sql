@@ -1,4 +1,4 @@
-{{ config(materialized='table') }}
+
 
 WITH finance_day AS (
     SELECT
