@@ -54,3 +54,101 @@ sources:
             description: Logistical cost associated with the shipping process.
           - name: ship_cost
             description: The shipping cost.
+models:
+  - name: int_orders_margin
+    description: This model aggregates order data by `orders_id`, calculating the total revenue, total quantity, total purchase costs, and margin for each order.
+    columns:
+      - name: orders_id
+        description: Unique identifier for each order. This is used to group the sales data.
+        tests:
+          - unique
+          - not_null
+      - name: date_date
+        description: The date when the order was placed. Each order has a single corresponding date.
+      - name: total_revenue
+        description: The total revenue for the order, calculated as the sum of the revenue for each product in the order.
+      - name: total_qty
+        description: The total quantity of items in the order.
+      - name: total_purchase_costs
+        description: The total purchase costs for the order, calculated as the sum of purchase costs for each product.
+      - name: total_margin
+        description: The margin for the order, calculated as the difference between revenue and purchase costs.
+
+  - name: int_orders_operational
+    description: This model calculates the operational margin for each order. It includes information from `int_orders_margin` and operational cost details from the `ship` table.
+    columns:
+      - name: orders_id
+        description: Unique identifier for each order. Used to link with other data tables like `int_orders_margin` and `ship`.
+        tests:
+          - unique
+          - not_null
+      - name: date_date
+        description: The date when the order was placed. This is the same date as in the `int_orders_margin` model.
+      - name: total_revenue
+        description: The total revenue for the order.
+      - name: total_qty
+        description: The total quantity of items in the order.
+      - name: total_purchase_costs
+        description: The total purchase costs for the order.
+      - name: total_margin
+        description: The margin for the order, previously calculated in the `int_orders_margin` model.
+      - name: shipping_fee
+        description: The cost of shipping for the order, obtained from the `ship` table.
+      - name: logcost
+        description: The logistics cost for the order, obtained from the `ship` table.
+      - name: ship_cost
+        description: The shipping cost for the order, obtained from the `ship` table.
+      - name: operational_margin
+        description: The operational margin, calculated as `margin + shipping_fee - logcost - ship_cost`.
+
+  - name: int_sales_margin
+    description: This model calculates the margin for each product sold within an order. It includes revenue, quantity, purchase costs, and margin details for each product.
+    columns:
+      - name: orders_id
+        description: Unique identifier for each order. This is the same identifier as in the `int_orders_margin` model.
+        tests:
+          - not_null
+      - name: products_id
+        description: Unique identifier for each product in the inventory. This links each sale to a specific product.
+        tests:
+          - not_null
+      - name: date_date
+        description: The date when the purchase was made, associated with the `orders_id`.
+      - name: revenue
+        description: The revenue from the sale of the product, calculated as `price_per_unit * quantity_sold`.
+      - name: qty
+        description: The quantity of the product sold in the specific transaction.
+      - name: purchase_price
+        description: The price at which the product was purchased, taken from the `products` table.
+      - name: purchase_costs
+        description: The total cost for the product in the sale, calculated as `quantity * purchase_price`.
+      - name: margin
+        description: The margin for the product, calculated as `revenue - purchase_costs`.
+
+  - name: finance_days
+    description: This model aggregates financial data on a daily basis. It includes total revenue, quantity, number of transactions, margin, and operational margin per day.
+    columns:
+      - name: date_date
+        description: The date of the financial data aggregation.
+        tests:
+          - not_null
+      - name: total_revenue
+        description: The total revenue for the day, aggregated across all orders.
+      - name: total_qty
+        description: The total quantity of products sold on the day.
+      - name: nb_transaction
+        description: The number of unique transactions (orders) that occurred on the given date.
+      - name: total_margin
+        description: The total margin for the day, calculated as the sum of margins for all orders.
+      - name: operational_margin
+        description: The total operational margin for the day, calculated as the sum of operational margins for all orders.
+      - name: total_purchase_costs
+        description: The total purchase costs for the day, calculated as the sum of costs across all orders.
+      - name: total_shipping_fees
+        description: The total shipping fees for the day, calculated as the sum of shipping fees for all orders.
+      - name: total_logcosts
+        description: The total logistics costs for the day, calculated as the sum of logistics costs for all orders.
+      - name: avg_basket
+        description: The average basket size (total revenue divided by the number of distinct orders) for the day.
+
+        
