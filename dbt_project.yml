@@ -41,3 +41,10 @@ models:
     example:
       +materialized: table
       +limit: null 
+    mart:
+      +materialized: table
+    finance:
+      +schema: dbt_Yevheniia_finance  # Change the target dataset for models in the finance folder
+      +materialized: table  
+
+    
