@@ -9,8 +9,9 @@ WITH finance_data AS (
         SUM(total_purchase_costs) AS total_purchase_costs,
         SUM(total_shipping_fees) AS total_shipping_fees,
         SUM(total_logcosts) AS total_logcosts,
-        SUM(total_ship_costs) AS total_ship_costs,
+        
         SUM(avg_basket) AS avg_basket
+
     FROM 
         {{ ref('finance_days') }} 
     GROUP BY 
@@ -42,7 +43,9 @@ SELECT
     f.avg_basket,
     c.ads_cost,
     c.ads_impressions,
-    c.ads_clicks
+    c.ads_clicks,
+    f.operational_margin - c.ads_cost AS ads_margin
+    
 FROM 
     finance_data f
 LEFT JOIN 
