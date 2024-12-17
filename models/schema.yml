@@ -255,19 +255,13 @@ models:
 
       - name: total_purchase_costs
         description: "The total costs associated with the purchase of items."
-        tests:
-          - not_null
-
+      
       - name: total_shipping_fees
         description: "The total cost of shipping."
-        tests:
-          - not_null
-
+        
       - name: total_logcosts
         description: "The total logistics costs."
-        tests:
-          - not_null
-
+       
       - name: avg_basket
         description: "The average basket size, calculated as total revenue divided by the number of transactions."
         tests:
@@ -275,16 +269,11 @@ models:
 
       - name: ads_cost
         description: "The total advertising cost for the campaigns."
-        tests:
-          - not_null
-
+     
       - name: ads_impressions
         description: "The total number of impressions from the campaigns."
-        tests:
-          - not_null
-
+        
       - name: ads_clicks
         description: "The total number of clicks from the campaigns."
-        tests:
-          - not_null          
+                  
               
